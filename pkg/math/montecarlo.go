@@ -12,9 +12,9 @@ import (
 
 // MonteCarlo performs various Monte Carlo simulations
 // Args: simulationType (string), iterations (int), optional parameters
-func MonteCarlo(this js.Value, args []js.Value) interface{} {
+func MonteCarlo(this js.Value, args []js.Value) any {
 	if len(args) < 1 {
-		return map[string]interface{}{
+		return map[string]any{
 			"error": "missing simulation type",
 		}
 	}
@@ -26,7 +26,7 @@ func MonteCarlo(this js.Value, args []js.Value) interface{} {
 	}
 
 	if iterations <= 0 {
-		return map[string]interface{}{
+		return map[string]any{
 			"error": "iterations must be positive",
 		}
 	}
@@ -44,14 +44,14 @@ func MonteCarlo(this js.Value, args []js.Value) interface{} {
 	case "random_walk":
 		return randomWalk(rng, iterations, args)
 	default:
-		return map[string]interface{}{
+		return map[string]any{
 			"error": "unknown simulation type: " + simType,
 		}
 	}
 }
 
 // estimatePi estimates π using Monte Carlo method
-func estimatePi(rng *rand.Rand, iterations int) map[string]interface{} {
+func estimatePi(rng *rand.Rand, iterations int) map[string]any {
 	insideCircle := 0
 	for i := 0; i < iterations; i++ {
 		x := rng.Float64()
@@ -68,7 +68,7 @@ func estimatePi(rng *rand.Rand, iterations int) map[string]interface{} {
 	actualPi := math.Pi
 	errorPercent := 100.0 * math.Abs(piEstimate-actualPi) / actualPi
 
-	return map[string]interface{}{
+	return map[string]any{
 		"type":        "pi",
 		"result":      piEstimate,
 		"actual":      actualPi,
@@ -81,7 +81,7 @@ func estimatePi(rng *rand.Rand, iterations int) map[string]interface{} {
 
 // estimateIntegral estimates definite integral using Monte Carlo
 // Estimates ∫[0,1] x² dx = 1/3
-func estimateIntegral(rng *rand.Rand, iterations int, args []js.Value) map[string]interface{} {
+func estimateIntegral(rng *rand.Rand, iterations int, _ []js.Value) map[string]any {
 	sum := 0.0
 	for i := 0; i < iterations; i++ {
 		x := rng.Float64()
@@ -93,7 +93,7 @@ func estimateIntegral(rng *rand.Rand, iterations int, args []js.Value) map[strin
 	actual := 1.0 / 3.0 // ∫[0,1] x² dx = 1/3
 	errorPercent := 100.0 * math.Abs(estimate-actual) / actual
 
-	return map[string]interface{}{
+	return map[string]any{
 		"type":       "integral",
 		"result":     estimate,
 		"actual":     actual,
@@ -105,14 +105,14 @@ func estimateIntegral(rng *rand.Rand, iterations int, args []js.Value) map[strin
 }
 
 // simulateDice simulates rolling multiple dice
-func simulateDice(rng *rand.Rand, iterations int, args []js.Value) map[string]interface{} {
+func simulateDice(rng *rand.Rand, iterations int, args []js.Value) map[string]any {
 	numDice := 2 // default: 2 dice
 	if len(args) > 2 {
 		numDice = args[2].Int()
 	}
 
 	if numDice < 1 || numDice > 10 {
-		return map[string]interface{}{
+		return map[string]any{
 			"error": "number of dice must be between 1 and 10",
 		}
 	}
@@ -133,7 +133,7 @@ func simulateDice(rng *rand.Rand, iterations int, args []js.Value) map[string]in
 	}
 
 	// Convert frequency to percentage
-	distribution := make(map[string]interface{})
+	distribution := make(map[string]any)
 	for s := minSum; s <= maxSum; s++ {
 		percentage := 100.0 * float64(frequency[s]) / float64(iterations)
 		distribution[string(rune('0'+s))] = percentage
@@ -142,7 +142,7 @@ func simulateDice(rng *rand.Rand, iterations int, args []js.Value) map[string]in
 	average := sum / float64(iterations)
 	expectedAvg := float64(numDice) * 3.5
 
-	return map[string]interface{}{
+	return map[string]any{
 		"type":         "dice",
 		"numDice":      numDice,
 		"iterations":   iterations,
@@ -155,7 +155,7 @@ func simulateDice(rng *rand.Rand, iterations int, args []js.Value) map[string]in
 }
 
 // randomWalk simulates 2D random walk
-func randomWalk(rng *rand.Rand, iterations int, args []js.Value) map[string]interface{} {
+func randomWalk(rng *rand.Rand, iterations int, _ []js.Value) map[string]any {
 	x, y := 0.0, 0.0
 	maxDistance := 0.0
 	distances := make([]float64, 0, iterations/100)
@@ -188,7 +188,7 @@ func randomWalk(rng *rand.Rand, iterations int, args []js.Value) map[string]inte
 	finalDistance := math.Sqrt(x*x + y*y)
 	expectedDistance := math.Sqrt(float64(iterations)) // Theoretical expectation
 
-	return map[string]interface{}{
+	return map[string]any{
 		"type":             "random_walk",
 		"iterations":       iterations,
 		"finalX":           x,
