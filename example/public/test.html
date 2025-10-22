@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>WASM Test</title>
+    <script src="wasm_exec.js"></script>
+    <style>
+        body {
+            font-family: monospace;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        .test {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 4px solid #4CAF50;
+        }
+        .test.error {
+            border-left-color: #f44336;
+        }
+        h2 {
+            margin-top: 0;
+        }
+        pre {
+            background: #f5f5f5;
+            padding: 10px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Chronos WASM Test Suite</h1>
+    <div id="results"></div>
+
+    <script>
+        const results = document.getElementById('results');
+
+        function addResult(title, success, data) {
+            const div = document.createElement('div');
+            div.className = 'test' + (success ? '' : ' error');
+            div.innerHTML = `
+                <h2>${success ? '✓' : '✗'} ${title}</h2>
+                <pre>${JSON.stringify(data, null, 2)}</pre>
+            `;
+            results.appendChild(div);
+        }
+
+        async function runTests() {
+            try {
+                // Load WASM
+                const go = new Go();
+                const response = await fetch('main.wasm');
+                const buffer = await response.arrayBuffer();
+                const result = await WebAssembly.instantiate(buffer, go.importObject);
+                go.run(result.instance);
+
+                // Wait for initialization
+                await new Promise(resolve => setTimeout(resolve, 200));
+
+                // Test 1: SHA-256
+                try {
+                    const sha256Result = sha256Hash('Hello, WASM!');
+                    addResult('SHA-256 Hash', !sha256Result.error, sha256Result);
+                } catch (e) {
+                    addResult('SHA-256 Hash', false, { error: e.message });
+                }
+
+                // Test 2: Matrix Multiplication
+                try {
+                    const matrixA = [[1, 2], [3, 4]];
+                    const matrixB = [[5, 6], [7, 8]];
+                    const matrixResult = matrixMultiply(matrixA, matrixB);
+                    addResult('Matrix Multiplication (2x2)', !matrixResult.error, matrixResult);
+                } catch (e) {
+                    addResult('Matrix Multiplication', false, { error: e.message });
+                }
+
+                // Test 3: Monte Carlo
+                try {
+                    const mcResult = monteCarlo(100000);
+                    addResult('Monte Carlo Simulation', !mcResult.error && Math.abs(mcResult.pi - Math.PI) < 0.1, mcResult);
+                } catch (e) {
+                    addResult('Monte Carlo Simulation', false, { error: e.message });
+                }
+
+                // Test 4: RSA Sign/Verify
+                try {
+                    const privateKey = {
+                        n: "119648321071599662636280525066239031513861172559545055237682545016849345248559002382212779806215669109844712160945279475028257045415011034146247010695764706749385196480966692000781820901770244415003256367588582441320021736783850733931684870645399781008639796575584441496351969572678678664660965545996833321987",
+                        d: "33125699401614966792864976838493890585520454788999576647697193006366219766887083917848845433783667365970022732262258318730643910470919750813534017205079608840790411756744869210517388636296957049962084433345999349681275453821727256230382271421438176394286504384252162645222388934042274670324525236035765556493",
+                        e: 65537
+                    };
+                    const publicKey = {
+                        n: "119648321071599662636280525066239031513861172559545055237682545016849345248559002382212779806215669109844712160945279475028257045415011034146247010695764706749385196480966692000781820901770244415003256367588582441320021736783850733931684870645399781008639796575584441496351969572678678664660965545996833321987",
+                        e: 65537
+                    };
+                    
+                    const signResult = rsaSign('Test message', JSON.stringify(privateKey));
+                    if (signResult.error) {
+                        addResult('RSA Sign', false, signResult);
+                    } else {
+                        const verifyResult = rsaVerify('Test message', signResult.signature, JSON.stringify(publicKey));
+                        addResult('RSA Sign & Verify', verifyResult.valid, { signResult, verifyResult });
+                    }
+                } catch (e) {
+                    addResult('RSA Sign & Verify', false, { error: e.message });
+                }
+
+                // Test 5: Base64 to Protobuf
+                try {
+                    const pbResult = base64ToProtobuf('CAESBHRlc3Q=');
+                    addResult('Base64 to Protobuf', !pbResult.error, pbResult);
+                } catch (e) {
+                    addResult('Base64 to Protobuf', false, { error: e.message });
+                }
+
+                // Test 6: Large Matrix (100x100)
+                try {
+                    const size = 100;
+                    const matrixA = Array(size).fill(0).map(() => Array(size).fill(0).map(() => Math.random()));
+                    const matrixB = Array(size).fill(0).map(() => Array(size).fill(0).map(() => Math.random()));
+                    const startTime = performance.now();
+                    const largeMatrixResult = matrixMultiply(matrixA, matrixB);
+                    const endTime = performance.now();
+                    addResult('Large Matrix Multiplication (100x100)', !largeMatrixResult.error, {
+                        rows: largeMatrixResult.rows,
+                        cols: largeMatrixResult.cols,
+                        sampleValue: largeMatrixResult.result[0][0],
+                        timeMs: (endTime - startTime).toFixed(2)
+                    });
+                } catch (e) {
+                    addResult('Large Matrix Multiplication', false, { error: e.message });
+                }
+
+            } catch (e) {
+                addResult('WASM Loading', false, { error: e.message, stack: e.stack });
+            }
+        }
+
+        runTests();
+    </script>
+</body>
+</html>
+
