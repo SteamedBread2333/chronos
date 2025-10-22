@@ -43,10 +43,12 @@ Chronos WASM showcases five powerful capabilities implemented in Go and compiled
 - Real-time performance monitoring
 - Performance: 10-50ms for 100×100 matrices
 
-### 🎲 **Monte Carlo Simulation**
-- Estimate π using statistical sampling
+### 🎲 **Monte Carlo Simulation Framework**
+- **Estimate π**: Circle method with error analysis
+- **Definite Integral**: Numerical integration (∫x² dx)
+- **Dice Rolling**: Multi-dice probability distribution
+- **Random Walk**: 2D random walk simulation
 - Configurable iteration count (default: 1 million)
-- Visual error analysis
 - Performance: 50-100ms for 1M iterations
 
 ### 🔑 **RSA Digital Signature**
@@ -188,11 +190,50 @@ console.log(result.result)
 
 ### Monte Carlo Simulation
 
+The Monte Carlo function now supports multiple simulation types:
+
+#### Estimate π
+
 ```javascript
-const result = window.monteCarlo(1000000)
-console.log(result.pi)        // ~3.14159...
-console.log(result.iterations) // 1000000
-console.log(result.inside)     // Points inside circle
+const result = window.monteCarlo('pi', 1000000)
+console.log(result.result)      // ~3.14159...
+console.log(result.actual)      // 3.141592653589793
+console.log(result.error)       // Error percentage
+console.log(result.inside)      // Points inside circle
+console.log(result.convergence) // Convergence rate
+```
+
+#### Definite Integral (∫x² dx from 0 to 1)
+
+```javascript
+const result = window.monteCarlo('integral', 1000000)
+console.log(result.result)   // ~0.333...
+console.log(result.actual)   // 0.333... (1/3)
+console.log(result.error)    // Error percentage
+console.log(result.function) // "x²"
+console.log(result.interval) // "[0, 1]"
+```
+
+#### Dice Rolling Simulation
+
+```javascript
+// Roll 2 dice, 100,000 times
+const result = window.monteCarlo('dice', 100000, 2)
+console.log(result.average)      // ~7.0 (expected for 2 dice)
+console.log(result.expected)     // 7.0
+console.log(result.distribution) // Probability distribution
+console.log(result.numDice)      // 2
+```
+
+#### 2D Random Walk
+
+```javascript
+const result = window.monteCarlo('random_walk', 10000)
+console.log(result.finalX)           // Final X position
+console.log(result.finalY)           // Final Y position
+console.log(result.finalDistance)    // Distance from origin
+console.log(result.expectedDistance) // √n (theoretical)
+console.log(result.maxDistance)      // Maximum distance reached
 ```
 
 ### RSA Digital Signature
@@ -241,8 +282,11 @@ Typical performance in modern browsers:
 | SHA-256 | Small text (< 1KB) | < 1ms | ✅ |
 | Matrix Multiplication | 10×10 | < 1ms | ✅ |
 | Matrix Multiplication | 100×100 | 10-50ms | ✅ |
-| Monte Carlo | 100,000 iterations | 5-15ms | ✅ |
-| Monte Carlo | 1,000,000 iterations | 50-100ms | ✅ |
+| Monte Carlo (π) | 100,000 iterations | 5-15ms | ✅ |
+| Monte Carlo (π) | 1,000,000 iterations | 50-100ms | ✅ |
+| Monte Carlo (Integral) | 1,000,000 iterations | 40-80ms | ✅ |
+| Monte Carlo (Dice) | 100,000 rolls | 10-30ms | ✅ |
+| Monte Carlo (Random Walk) | 10,000 steps | 5-15ms | ✅ |
 | RSA Sign | RSA-1024 | 5-20ms | ✅ |
 | RSA Verify | RSA-1024 | 5-20ms | ✅ |
 | Protobuf Decode | Small message | < 1ms | ✅ |

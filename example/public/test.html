@@ -77,12 +77,36 @@
                     addResult('Matrix Multiplication', false, { error: e.message });
                 }
 
-                // Test 3: Monte Carlo
+                // Test 3: Monte Carlo - Pi Estimation
                 try {
-                    const mcResult = monteCarlo(100000);
-                    addResult('Monte Carlo Simulation', !mcResult.error && Math.abs(mcResult.pi - Math.PI) < 0.1, mcResult);
+                    const mcPiResult = monteCarlo('pi', 100000);
+                    addResult('Monte Carlo - Estimate π', !mcPiResult.error && Math.abs(mcPiResult.result - Math.PI) < 0.1, mcPiResult);
                 } catch (e) {
-                    addResult('Monte Carlo Simulation', false, { error: e.message });
+                    addResult('Monte Carlo - Estimate π', false, { error: e.message });
+                }
+
+                // Test 3b: Monte Carlo - Integral
+                try {
+                    const mcIntegralResult = monteCarlo('integral', 100000);
+                    addResult('Monte Carlo - Integral', !mcIntegralResult.error && Math.abs(mcIntegralResult.result - 0.333) < 0.01, mcIntegralResult);
+                } catch (e) {
+                    addResult('Monte Carlo - Integral', false, { error: e.message });
+                }
+
+                // Test 3c: Monte Carlo - Dice
+                try {
+                    const mcDiceResult = monteCarlo('dice', 10000, 2);
+                    addResult('Monte Carlo - Dice Rolling', !mcDiceResult.error && mcDiceResult.numDice === 2, mcDiceResult);
+                } catch (e) {
+                    addResult('Monte Carlo - Dice Rolling', false, { error: e.message });
+                }
+
+                // Test 3d: Monte Carlo - Random Walk
+                try {
+                    const mcWalkResult = monteCarlo('random_walk', 1000);
+                    addResult('Monte Carlo - Random Walk', !mcWalkResult.error && mcWalkResult.steps === 1000, mcWalkResult);
+                } catch (e) {
+                    addResult('Monte Carlo - Random Walk', false, { error: e.message });
                 }
 
                 // Test 4: RSA Sign/Verify

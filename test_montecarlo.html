@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Test Monte Carlo</title>
+    <script src="example/public/wasm_exec.js"></script>
+</head>
+<body>
+    <h1>Monte Carlo Test</h1>
+    <button onclick="testPi()">Test Pi Estimation</button>
+    <pre id="result"></pre>
+
+    <script>
+        async function loadWasm() {
+            const go = new Go();
+            const response = await fetch('example/public/main.wasm');
+            const buffer = await response.arrayBuffer();
+            const result = await WebAssembly.instantiate(buffer, go.importObject);
+            go.run(result.instance);
+            await new Promise(resolve => setTimeout(resolve, 200));
+        }
+
+        function testPi() {
+            console.log('Testing monteCarlo function...');
+            console.log('Function exists?', typeof window.monteCarlo);
+            
+            const result = window.monteCarlo('pi', 100000);
+            console.log('Result:', result);
+            
+            document.getElementById('result').textContent = JSON.stringify(result, null, 2);
+        }
+
+        loadWasm().then(() => {
+            console.log('WASM loaded, monteCarlo function:', typeof window.monteCarlo);
+        });
+    </script>
+</body>
+</html>

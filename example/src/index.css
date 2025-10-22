@@ -246,3 +246,61 @@ button:disabled {
   color: #742a2a;
 }
 
+/* Monte Carlo Pi Estimation Special Styles */
+.pi-result {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 16px;
+}
+
+.pi-result .pi-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin: 16px 0;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.pi-result .pi-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.pi-result .pi-info-item {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 12px;
+  border-radius: 6px;
+  backdrop-filter: blur(10px);
+}
+
+.pi-result .pi-info-item strong {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.9;
+  margin-bottom: 4px;
+}
+
+.pi-result .pi-info-item .value {
+  font-size: 1.1rem;
+  font-weight: 600;
+  font-family: 'Courier New', monospace;
+}
+
+.pi-result .convergence-badge {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 8px 16px;
+  border-radius: 20px;
+  display: inline-block;
+  margin-top: 12px;
+  font-size: 0.875rem;
+  backdrop-filter: blur(10px);
+}
+
