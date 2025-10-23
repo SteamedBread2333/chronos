@@ -20,6 +20,7 @@
 - [Features](#-features)
 - [Live Demo](#-live-demo)
 - [Quick Start](#-quick-start)
+- [GitHub Pages Deployment](#-github-pages-deployment)
 - [Project Structure](#-project-structure)
 - [API Usage](#-api-usage)
 - [Performance](#-performance)
@@ -66,8 +67,9 @@ Chronos WASM showcases five powerful capabilities implemented in Go and compiled
 
 ## 🚀 Live Demo
 
-Once the development server is running, access:
+**GitHub Pages**: [https://YOUR_USERNAME.github.io/chronos-wasm/](https://YOUR_USERNAME.github.io/chronos-wasm/)
 
+For local development:
 - **Main Application**: http://localhost:5173
 - **Test Suite**: http://localhost:5173/test.html
 
@@ -120,6 +122,49 @@ npm install
 
 # 5. Start development server
 npm run dev
+```
+
+## 🌐 GitHub Pages Deployment
+
+### Automatic Deployment (Recommended)
+
+This project includes GitHub Actions for automatic deployment:
+
+1. **Push to GitHub**:
+   ```bash
+   git add .
+   git commit -m "Setup GitHub Pages"
+   git push origin main
+   ```
+
+2. **Enable GitHub Pages**:
+   - Go to repository **Settings** → **Pages**
+   - Under **Source**, select **GitHub Actions**
+
+3. **Access Your Site**:
+   - The workflow will automatically build and deploy
+   - Your site will be available at: `https://YOUR_USERNAME.github.io/chronos-wasm/`
+
+### Manual Deployment
+
+```bash
+# Build locally
+./deploy.sh
+
+# The output will be in example/dist/
+# You can manually upload this to GitHub Pages or any static host
+```
+
+### Configuration
+
+The `base` path in `vite.config.js` is set to `/chronos-wasm/`. If your repository name is different, update:
+
+```javascript
+// example/vite.config.js
+export default defineConfig({
+  base: '/YOUR_REPO_NAME/',
+  // ...
+})
 ```
 
 ## 📁 Project Structure
