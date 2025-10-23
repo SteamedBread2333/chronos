@@ -67,11 +67,7 @@ Chronos WASM showcases five powerful capabilities implemented in Go and compiled
 
 ## 🚀 Live Demo
 
-**GitHub Pages**: [https://YOUR_USERNAME.github.io/chronos/](https://YOUR_USERNAME.github.io/chronos/)
-
-For local development:
-- **Main Application**: http://localhost:5173
-- **Test Suite**: http://localhost:5173/test.html
+**GitHub Pages**: [https://steamedbread2333.github.io/chronos/](https://steamedbread2333.github.io/chronos/)
 
 ## 🎯 Quick Start
 
@@ -122,49 +118,6 @@ npm install
 
 # 5. Start development server
 npm run dev
-```
-
-## 🌐 GitHub Pages Deployment
-
-### Automatic Deployment (Recommended)
-
-This project includes GitHub Actions for automatic deployment:
-
-1. **Push to GitHub**:
-   ```bash
-   git add .
-   git commit -m "Setup GitHub Pages"
-   git push origin main
-   ```
-
-2. **Enable GitHub Pages**:
-   - Go to repository **Settings** → **Pages**
-   - Under **Source**, select **GitHub Actions**
-
-3. **Access Your Site**:
-   - The workflow will automatically build and deploy
-   - Your site will be available at: `https://YOUR_USERNAME.github.io/chronos/`
-
-### Manual Deployment
-
-```bash
-# Build locally
-./deploy.sh
-
-# The output will be in example/dist/
-# You can manually upload this to GitHub Pages or any static host
-```
-
-### Configuration
-
-The `base` path in `vite.config.js` is set to `/chronos/`. If your repository name is different, update:
-
-```javascript
-// example/vite.config.js
-export default defineConfig({
-  base: '/YOUR_REPO_NAME/',
-  // ...
-})
 ```
 
 ## 📁 Project Structure
@@ -405,29 +358,6 @@ Chronos WASM works in all modern browsers that support WebAssembly:
 - JavaScript BigInt support
 - Fetch API support
 
-## 🎨 Design Philosophy
-
-### Go Code Design
-
-- **Modular Architecture**: Each feature is an independent package with clear responsibilities
-- **Error Handling**: All functions return objects with error information
-- **Type Safety**: Leverages Go's strong type system for safety
-- **Performance Optimized**: Algorithms optimized for WASM environment
-
-### React UI Design
-
-- **Modern UI**: Clean, professional design with subtle interactions
-- **Responsive**: Adapts to various screen sizes
-- **Real-time Feedback**: Shows computation time and performance metrics
-- **User-Friendly**: Clear input hints and error messages
-
-### Code Style
-
-- Follows Go official code conventions
-- Uses `gofmt` for automatic formatting
-- CamelCase naming convention
-- Comprehensive comments and documentation
-
 ## 📝 FAQ
 
 ### Q: WASM file is too large?
@@ -460,15 +390,13 @@ MIT License
 
 ## 🔗 Resources
 
-- [Go WebAssembly Documentation](https://github.com/golang/go/wiki/WebAssembly)
-- [Vite Documentation](https://vitejs.dev/)
-- [React Documentation](https://react.dev/)
+- [Go WebAssembly Documentation](https://go.dev/wiki/WebAssembly)
 - [Protocol Buffers](https://protobuf.dev/)
 
 ---
 
 <div align="center">
-  <strong>Built with Go, WebAssembly, React, and Vite</strong>
+  <strong>Built with Go, WebAssembly</strong>
   <br>
   <sub>Enjoy the power of Go in the browser! 🚀</sub>
 </div>
