@@ -67,7 +67,7 @@ Chronos WASM showcases five powerful capabilities implemented in Go and compiled
 
 ## 🚀 Live Demo
 
-**GitHub Pages**: [https://YOUR_USERNAME.github.io/chronos-wasm/](https://YOUR_USERNAME.github.io/chronos-wasm/)
+**GitHub Pages**: [https://YOUR_USERNAME.github.io/chronos/](https://YOUR_USERNAME.github.io/chronos/)
 
 For local development:
 - **Main Application**: http://localhost:5173
@@ -143,7 +143,7 @@ This project includes GitHub Actions for automatic deployment:
 
 3. **Access Your Site**:
    - The workflow will automatically build and deploy
-   - Your site will be available at: `https://YOUR_USERNAME.github.io/chronos-wasm/`
+   - Your site will be available at: `https://YOUR_USERNAME.github.io/chronos/`
 
 ### Manual Deployment
 
@@ -157,7 +157,7 @@ This project includes GitHub Actions for automatic deployment:
 
 ### Configuration
 
-The `base` path in `vite.config.js` is set to `/chronos-wasm/`. If your repository name is different, update:
+The `base` path in `vite.config.js` is set to `/chronos/`. If your repository name is different, update:
 
 ```javascript
 // example/vite.config.js
