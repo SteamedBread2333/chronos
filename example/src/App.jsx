@@ -15,8 +15,9 @@ function App() {
         // Load wasm_exec.js
         const go = new window.Go()
         
-        // Fetch and instantiate WASM
-        const response = await fetch('/main.wasm')
+        // Fetch and instantiate WASM (use base URL)
+        const wasmUrl = `${import.meta.env.BASE_URL}main.wasm`
+        const response = await fetch(wasmUrl)
         const buffer = await response.arrayBuffer()
         const result = await WebAssembly.instantiate(buffer, go.importObject)
         
@@ -33,9 +34,9 @@ function App() {
       }
     }
 
-    // Load wasm_exec.js script first
+    // Load wasm_exec.js script first (use base URL)
     const script = document.createElement('script')
-    script.src = '/wasm_exec.js'
+    script.src = `${import.meta.env.BASE_URL}wasm_exec.js`
     script.onload = loadWasm
     script.onerror = () => setError('Failed to load wasm_exec.js')
     document.body.appendChild(script)
