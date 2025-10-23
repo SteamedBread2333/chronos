@@ -23,6 +23,10 @@ example/public/wasm_exec.js
 node_modules/
 example/node_modules/
 
+# Allow package-lock.json (override global gitignore)
+!package-lock.json
+!example/package-lock.json
+
 # Build output
 example/dist/
 
