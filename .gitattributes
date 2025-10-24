@@ -1,0 +1,17 @@
+# Tell GitHub this is primarily a Go project
+*.go linguist-language=Go
+
+# Mark example frontend code as documentation/vendored
+example/src/* linguist-documentation
+example/dist/* linguist-generated
+example/node_modules/* linguist-vendored
+
+# Mark WASM binary as generated
+*.wasm linguist-generated
+
+# Keep Go as the primary language
+*.js linguist-vendored=false
+*.jsx linguist-documentation
+*.css linguist-documentation
+*.html linguist-documentation
+
